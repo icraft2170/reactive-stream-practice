@@ -39,8 +39,12 @@ fun main() {
          })
     }
 
+
+
     val publishOnPub = publishOn(pub)
     val subOnPub = subscribeOn(publishOnPub)
+
+
 
     val sub = object: Subscriber<Int> {
         override fun onSubscribe(subscription: Subscription?) {
@@ -66,11 +70,32 @@ fun main() {
     println("[${Thread.currentThread().name}] - 종료")
 }
 
-private fun subscribeOn(pub: Publisher<Int>) =
-    Publisher<Int> { subscriber ->
+private fun subscribeOn(pub: Publisher<Int>): Publisher<Int> {
+    return Publisher<Int> { subscriber ->
         val es = Executors.newSingleThreadExecutor(CustomizableThreadFactory("subOn-"))
-        es.execute { pub.subscribe(subscriber) }
+        es.execute { pub.subscribe(object: Subscriber<Int> {
+            override fun onSubscribe(subscription: Subscription?) {
+                println("[${Thread.currentThread().name}] - onSubscribe")
+                subscription?.request(Long.MAX_VALUE)
+            }
+
+            override fun onNext(item: Int?) {
+                println("[${Thread.currentThread().name}] - OnNext : $item")
+            }
+
+            override fun onError(throwable: Throwable?) {
+                println("[${Thread.currentThread().name}] - OnError ${throwable?.message}")
+                es.shutdown()
+            }
+
+            override fun onComplete() {
+                println("[${Thread.currentThread().name}] - OnComplete")
+                es.shutdown()
+            }
+
+        }) }
     }
+}
 
 private fun publishOn(pub: Publisher<Int>): Publisher<Int> {
     val es = Executors.newSingleThreadExecutor(CustomizableThreadFactory("publishOn-"))
@@ -92,12 +117,14 @@ private fun publishOn(pub: Publisher<Int>): Publisher<Int> {
                 es.execute {
                     println("[${Thread.currentThread().name}] - OnError ${throwable?.message}")
                 }
+                es.shutdown()
             }
 
             override fun onComplete() {
                 es.execute {
                     println("[${Thread.currentThread().name}] - OnComplete")
                 }
+                es.shutdown()
             }
         })
     }
