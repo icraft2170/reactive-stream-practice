@@ -1,4 +1,4 @@
-package me.hero.tobyreactive.tv05
+package me.hero.tobyreactive.tv05.pubsub
 
 import java.util.*
 import java.util.concurrent.Executors

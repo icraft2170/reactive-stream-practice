@@ -1,4 +1,4 @@
-package me.hero.tobyreactive.tv05
+package me.hero.tobyreactive.tv05.pubsub
 
 /**
  * Duality ( 쌍대성 )

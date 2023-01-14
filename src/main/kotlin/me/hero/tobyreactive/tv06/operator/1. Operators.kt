@@ -1,4 +1,4 @@
-package me.hero.tobyreactive.tv06
+package me.hero.tobyreactive.tv06.operator
 
 import java.util.concurrent.Flow.*
 import java.util.stream.Stream.*
