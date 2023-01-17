@@ -19,49 +19,49 @@ import org.springframework.web.client.getForObject
  *
  */
 
-class Completion {
-    companion object {
-        @Suppress("DEPRECATION")
-        @JvmStatic
-        fun from( lf: ListenableFuture<ResponseEntity<String>>?): Completion {
-            val completion = Completion()
-            lf?.addCallback(
-                {
-                  completion.complete(it)
-                },
-                {
-                    completion.error(it)
-                }
-            )
-            return completion
-        }
-    }
-
-    private fun error(it: Throwable) {
-        TODO("Not yet implemented")
-    }
-
-    private fun complete(it: ResponseEntity<String>?) {
-        TODO("Not yet implemented")
-    }
-}
-
-@RestController
-class MyController {
-    @GetMapping("/rest")
-    fun rest(idx: Int): String {
-        val rt = RestTemplate()
-        val res =
-            rt.getForObject<String>("http://localhost:8081/service?request={request}", "hello $idx")
-        return res
-    }
-}
-
-@SpringBootApplication
-class Tobytv09Application()
-
-fun main(args: Array<String>) {
-    runApplication<Tobytv09Application>(*args)
-}
-
-
+//class Completion {
+//    companion object {
+//        @Suppress("DEPRECATION")
+//        @JvmStatic
+//        fun from( lf: ListenableFuture<ResponseEntity<String>>?): Completion {
+//            val completion = Completion()
+//            lf?.addCallback(
+//                {
+//                  completion.complete(it)
+//                },
+//                {
+//                    completion.error(it)
+//                }
+//            )
+//            return completion
+//        }
+//    }
+//
+//    private fun error(it: Throwable) {
+//        TODO("Not yet implemented")
+//    }
+//
+//    private fun complete(it: ResponseEntity<String>?) {
+//        TODO("Not yet implemented")
+//    }
+//}
+//
+//@RestController
+//class MyController {
+//    @GetMapping("/rest")
+//    fun rest(idx: Int): String {
+//        val rt = RestTemplate()
+//        val res =
+//            rt.getForObject<String>("http://localhost:8081/service?request={request}", "hello $idx")
+//        return res
+//    }
+//}
+//
+//@SpringBootApplication
+//class Tobytv09Application()
+//
+//fun main(args: Array<String>) {
+//    runApplication<Tobytv09Application>(*args)
+//}
+//
+//
