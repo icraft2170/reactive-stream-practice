@@ -2,8 +2,11 @@ package me.hero.tobyreactive.tv09.main
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.http.ResponseEntity
+import org.springframework.util.concurrent.ListenableFuture
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.client.AsyncRestTemplate
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
 
@@ -15,6 +18,33 @@ import org.springframework.web.client.getForObject
  * Thread Pool Hell 해결하기
  *
  */
+
+class Completion {
+    companion object {
+        @Suppress("DEPRECATION")
+        @JvmStatic
+        fun from( lf: ListenableFuture<ResponseEntity<String>>?): Completion {
+            val completion = Completion()
+            lf?.addCallback(
+                {
+                  completion.complete(it)
+                },
+                {
+                    completion.error(it)
+                }
+            )
+            return completion
+        }
+    }
+
+    private fun error(it: Throwable) {
+        TODO("Not yet implemented")
+    }
+
+    private fun complete(it: ResponseEntity<String>?) {
+        TODO("Not yet implemented")
+    }
+}
 
 @RestController
 class MyController {

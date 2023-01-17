@@ -1,16 +1,15 @@
 package me.hero.tobyreactive.tv09.remote
 
-import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController
 
-
 @RestController
-class RemoteController {
+class RemoteController{
     @GetMapping("/service")
-    fun rest(request: String): String {
+    fun service1(request: String): String {
+
         Thread.sleep(2000)
         return "$request/service"
     }
@@ -26,5 +25,3 @@ fun main(args: Array<String>) {
         )
     }
 }
-
-
