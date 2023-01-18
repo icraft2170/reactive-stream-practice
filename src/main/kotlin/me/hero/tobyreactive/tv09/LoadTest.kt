@@ -15,7 +15,7 @@ fun main() {
     val url = "http://localhost:8080/rest?idx={idx}"
 
     // 쓰레드 동기화 작업
-    val barrier = CyclicBarrier(100)
+    val barrier = CyclicBarrier(101)
 
 
     for (idx in 1..100) {
